@@ -1,0 +1,23 @@
+{% extends '../base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block header %}
+    {% include 'nav.html' %}
+{% endblock %}
+
+{% block main %}
+    <div class="mt-5 h-100 card">
+        <div class="card-body">
+            <h5 class="card-title">{{ user }} (@{{ user.username }})</h5>
+            <h6 class="card-text">{{ user.get_role_display }}</h6>
+            <p class="card-text"><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ user.home_address }}</p>
+            <div class="float-end">
+                <a class="btn btn-primary" href="{% url 'update_profile' %}">Edit Profile</a>
+                <a class="btn btn-outline-danger" href="{% url 'change_password' %}">Change Password</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

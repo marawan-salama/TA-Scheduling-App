@@ -1,0 +1,28 @@
+{% extends '../base.html' %}
+
+{% block title %}All Users{% endblock %}
+{% block header %}{% include 'nav.html' %}{% endblock %}
+
+{% block main %}
+    <h1 class="pt-3">All Users</h1>
+
+    {% if user.is_supervisor %}
+        <div class="my-4">
+            <a class="btn btn-primary" href="{% url 'create_user' %}" role="button">Create User</a>
+        </div>
+    {% endif %}
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for user in users %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ user }} (@{{ user.username }})</h5>
+                        <h6 class="card-text">{{ user.get_role_display }}</h6>
+                        <a class="btn btn-primary" href="{% url 'view_user' user.id %}" role="button">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

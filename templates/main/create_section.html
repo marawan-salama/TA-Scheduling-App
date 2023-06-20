@@ -1,0 +1,17 @@
+{% extends '../base.html' %}
+
+{% block title %}Create Section{% endblock %}
+{% block header %}{% include 'nav.html' %}{% endblock %}
+
+{% block main %}
+    <h1 class="py-3">Create Section</h1>
+    <form action="/courses/{{ course_id }}/sections/create/" method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+    <p>{{ message }}</p>
+    <a class="btn btn-primary" href="/courses/{{ course_id }}/">Back</a>
+{% endblock %}

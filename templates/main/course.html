@@ -1,0 +1,50 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ course }}{% endblock %}
+{% block header %}{% include 'nav.html' %}{% endblock %}
+
+{% block main %}
+    <h1 class="pt-3">{{ course.name }}</h1>
+    <h3 class="py-1">{{ course }}</h3>
+
+    {% if user.is_supervisor %}
+        <div class="my-4">
+            <a class="btn btn-primary" href="{% url 'edit_course' course.id %}" role="button">Edit</a>
+            <a class="btn btn-outline-danger" href="{% url 'delete_course' course.id %}" role="button">Delete</a>
+        </div>
+    {% endif %}
+
+    <p>Instructor:
+        {% if course.instructor %}
+            <a href="{% url 'view_user' course.instructor.id %}">{{ course.instructor }}</a>
+        {% else %}
+            Not yet assigned
+        {% endif %}
+    </p>
+{#    <p>TA(s):#}
+{#        {% for ta in tas %}#}
+{#            <a href="{% url 'view_user' ta.id %}">{{ ta }}</a>#}
+{#        {% endfor %}#}
+{#    </p>#}
+
+    <h2 class="pt-3">Sections</h2>
+    {% if user.is_supervisor %}
+        <div class="mb-4">
+            <a class="btn btn-primary" href="{% url 'create_section' course.id %}" role="button">Create Section</a>
+        </div>
+    {% endif %}
+    {% for section in sections %}
+        <h3>{{ section }}</h3>
+        <p>TA:
+            {% if section.ta %}
+                <a href="{% url 'view_user' section.ta.id %}">{{ section.ta }}</a>
+            {% else %}
+                Not yet assigned
+            {% endif %}
+        </p>
+        {% if user.is_supervisor %}
+            <a class="btn btn-primary" href="{% url 'edit_section' course.id section.id %}" role="button">Edit</a>
+            <a class="btn btn-outline-danger" href="{% url 'delete_section' course.id section.id %}" role="button">Delete</a>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

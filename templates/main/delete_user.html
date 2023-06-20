@@ -1,0 +1,25 @@
+{% extends '../base.html' %}
+
+{% block title %}Delete {{ requested_user }}{% endblock %}
+
+{% block header %}
+    {% include 'nav.html' %}
+{% endblock %}
+
+{% block main %}
+    <div class="text-center">
+        <form method="post" action="#">
+            {% csrf_token %}
+            <div class="mt-4 card">
+                <div class="card-header">
+                    Delete {{ requested_user }}
+                </div>
+                <div class="card-body text-center">
+                    <p class="card-text">Are you sure you want to delete {{ requested_user }}?</p>
+                    <input class="btn btn-danger" type="submit" value="Confirm"/>
+                    <a class="btn btn-secondary" href="{% url 'view_user' requested_user.id %}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

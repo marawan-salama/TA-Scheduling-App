@@ -1,0 +1,30 @@
+{% extends '../base.html' %}
+
+{% block title %}{{ requested_user }}{% endblock %}
+{% block header %}{% include 'nav.html' %}{% endblock %}
+
+{% block main %}
+    <div class="mt-3">
+        <a class="btn btn-primary" href="{{ request.META.HTTP_REFERER|escape }}">Back</a>
+        {% if user.is_supervisor or user.is_instructor %}
+            <a class="btn btn-primary" href="{% url 'view_users' %}">All Users</a>
+        {% endif %}   
+    </div>
+
+    <div class="mt-5 h-100 card">
+        <div class="card-body">
+            <h5 class="card-title">{{ requested_user }} (@{{ requested_user.username }})</h5>
+            <h6 class="card-text">{{ requested_user.get_role_display }}</h6>
+            {% if user.is_supervisor or user.is_instructor %}
+                <p class="card-text">Phone Number: {{ requested_user.phone_number }}</p>
+                <p class="card-text">Home Address: {{ requested_user.home_address }}</p>
+            {% endif %}
+            <div class="float-end">
+                {% if user.is_supervisor %}
+                    <a class="btn btn-primary" href="{% url 'edit_user' requested_user.id %}" role="button">Edit</a>
+                    <a class="btn btn-outline-danger" href="{% url 'delete_user' requested_user.id %}" role="button">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

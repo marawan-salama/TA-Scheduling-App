@@ -1,0 +1,36 @@
+{% extends '../base.html' %}
+
+{% block title %}My Courses{% endblock %}
+{% block header %}{% include 'nav.html' %}{% endblock %}
+
+{% block main %}
+    <h1 class="py-3">
+        {% if user.is_supervisor %}
+            All Courses
+        {% else %}
+            My Courses
+        {% endif %}
+    </h1>
+
+    {% if user.is_supervisor %}
+        <div class="mb-4">
+            <a class="btn btn-primary" href="{% url 'create_course' %}" role="button">Create Course</a>
+        </div>
+    {% endif %}
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for course in courses %}
+            <div class="col">
+                <div class="h-100 card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.subject }} {{ course.number }}</h5>
+                        <p class="card-text">{{ course.name }}</p>
+                        <a class="btn btn-primary" href="{% url 'view_course' course.id %}" role="button">View</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+
